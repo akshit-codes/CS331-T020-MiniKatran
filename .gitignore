@@ -1,0 +1,4 @@
+code/bin/
+code/bpf/*.o
+__pycache__/
+.~lock*

@@ -1,0 +1,5 @@
+*.o
+bin/
+*.skel.h
+__pycache__/
+results/*.out
