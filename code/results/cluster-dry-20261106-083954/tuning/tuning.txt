@@ -1,0 +1,21 @@
+Signal noise σ(P): median over backends of the CV of P-second averages
+
+at 80% load:
+  signal      P=1s     P=2s     P=4s     P=8s
+  cpu          nan      nan      nan      nan
+  rif          nan      nan      nan      nan
+  cgroup       nan      nan      nan      nan
+  psi          nan      nan      nan      nan
+
+cgroup:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+  note: no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (+Inf)
+cpu:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+  note: no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (+Inf)
+rif:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+  note: no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (+Inf)
+rif-total:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+  note: no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (+Inf)

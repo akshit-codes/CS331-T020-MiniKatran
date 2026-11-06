@@ -1,0 +1,35 @@
+Signal noise σ(P): median over backends of the CV of P-second averages
+
+at 80% load:
+  signal      P=1s     P=2s     P=4s     P=8s
+  cpu        0.214      nan      nan      nan
+  rif        0.382      nan      nan      nan
+  cgroup     0.226      nan      nan      nan
+  psi        0.271      nan      nan      nan
+
+cgroup:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+    1s  1.5   0.226     0.302    0.339    0.170        801       20 s
+    1s  2.0   0.226     0.302    0.452    0.226        473       20 s
+    1s  3.0   0.226     0.302    0.678    0.339          0      never  <- chosen
+  note: at P=1s the simulator alone is noisier (0.302) than measured (0.226): tuning is pessimistic for cgroup
+cpu:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+    1s  1.5   0.214     0.302    0.322    0.161       1029       20 s
+    1s  2.0   0.214     0.302    0.429    0.214        608       20 s
+    1s  3.0   0.214     0.302    0.643    0.322          0      never  <- chosen
+  note: at P=1s the simulator alone is noisier (0.302) than measured (0.214): tuning is pessimistic for cpu
+rif:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+    1s  1.5   0.382     0.391    0.574    0.287       1406       20 s
+    1s  2.0   0.382     0.391    0.765    0.382        814       20 s
+    1s  3.0   0.382     0.391    1.147    0.574        470       20 s  <- chosen
+  note: no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (939)
+  note: at P=1s the simulator alone is noisier (0.391) than measured (0.382): tuning is pessimistic for rif
+rif-total:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+    1s  1.5   0.382     0.391    0.574    0.287       1406       20 s
+    1s  2.0   0.382     0.391    0.765    0.382        814       20 s
+    1s  3.0   0.382     0.391    1.147    0.574        470       20 s  <- chosen
+  note: no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (939)
+  note: at P=1s the simulator alone is noisier (0.391) than measured (0.382): tuning is pessimistic for rif-total

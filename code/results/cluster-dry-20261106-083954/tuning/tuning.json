@@ -1,0 +1,26 @@
+[
+  {
+    "signal": "cgroup",
+    "chosen": null,
+    "note": "no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (+Inf)",
+    "candidates": null
+  },
+  {
+    "signal": "cpu",
+    "chosen": null,
+    "note": "no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (+Inf)",
+    "candidates": null
+  },
+  {
+    "signal": "rif",
+    "chosen": null,
+    "note": "no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (+Inf)",
+    "candidates": null
+  },
+  {
+    "signal": "rif-total",
+    "chosen": null,
+    "note": "no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (+Inf)",
+    "candidates": null
+  }
+]
