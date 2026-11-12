@@ -1,0 +1,8 @@
+/bin/
+__pycache__/
+*.pyc
+# per-request CSVs from loadgen -out (large); summaries stay in git
+results/**/raw/
+# local copies of papers and blog posts; references/README.md has the links
+/references/papers/
+/references/blogs/

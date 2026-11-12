@@ -1,0 +1,176 @@
+=== s12: 0 of 14 units done already
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/scripts/tune.sh apply
+applied (disabled 44 deep idle states, moved 47 interrupts); undo with: sudo /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/scripts/tune.sh undo
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/scripts/topology.sh up
+testbed up
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=8 --scope ip netns exec beP1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -calibrate
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16 --scope ip netns exec beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -calibrate
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=8,10 --collect --unit=cs331-beP1 ip netns exec beP1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -work 101394 -slowness 1.6 -cost exp -mode pool -listen :8080 -metrics :9100
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=12,14 --collect --unit=cs331-beP2 ip netns exec beP2 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -work 101394 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-beE1 ip netns exec beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -work 101394 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=20-23 --collect --unit=cs331-beE2 ip netns exec beE2 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -work 101394 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl load
+##### s12 unit 1/14: antagonist-oracle-2
+=== antagonist-oracle-2 (240 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-antagonist-beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/antagonist -duty 0.6 -kind burn
+  t= 60.0 s: antagonist on beE1
+  t=180.0 s: antagonist off
+  p99 per 5 s: [13, 10, 11, 10, 10, 11, 15, 11, 11, 11, 10, 10, 133, 167, 223, 277, 303, 321, 412, 948, 1508, 2317, 3074, 3257, 3349, 3711, 4304, 4815, 5418, 5864, 6433, 7218, 7618, 8648, 8884, 7750, 6194, 4592, 3174, 1768, 380, 58, 11, 10, 11, 10, 11, 10]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 2/14: antagonist-cpu-3
+=== antagonist-cpu-3 (240 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-antagonist-beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/antagonist -duty 0.6 -kind burn
+  t= 60.0 s: antagonist on beE1
+  t=180.0 s: antagonist off
+  p99 per 5 s: [12, 11, 10, 12, 10, 11, 12, 11, 10, 11, 10, 11, 69, 90, 61, 22, 14, 13, 13, 17, 13, 16, 15, 13, 12, 12, 17, 15, 15, 13, 13, 15, 15, 12, 19, 15, 13, 12, 11, 10, 12, 11, 11, 11, 11, 12, 11, 11]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 3/14: antagonist-rif-total-3
+=== antagonist-rif-total-3 (240 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-antagonist-beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/antagonist -duty 0.6 -kind burn
+  t= 60.0 s: antagonist on beE1
+  t=180.0 s: antagonist off
+  p99 per 5 s: [12, 13, 12, 12, 10, 10, 11, 13, 12, 13, 11, 12, 27, 81, 65, 20, 18, 14, 16, 14, 12, 17, 16, 17, 13, 14, 13, 14, 16, 14, 14, 14, 16, 16, 14, 19, 12, 11, 12, 11, 12, 12, 20, 13, 15, 14, 12, 11]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 4/14: step-rif-total-4
+=== step-rif-total-4 (180 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=2.0
+  t= 60.0 s: beP2 slowness 2
+  p99 per 5 s: [14, 10, 10, 11, 12, 11, 12, 11, 11, 11, 11, 19, 227, 355, 374, 351, 316, 143, 17, 16, 15, 19, 17, 19, 18, 22, 17, 19, 19, 15, 18, 15, 16, 15, 15, 18]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 5/14: step-cpu-4
+=== step-cpu-4 (180 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=2.0
+  t= 60.0 s: beP2 slowness 2
+  p99 per 5 s: [14, 10, 10, 11, 12, 10, 11, 11, 11, 10, 10, 24, 266, 401, 373, 360, 347, 225, 22, 14, 20, 17, 21, 20, 16, 17, 21, 20, 16, 21, 20, 18, 13, 15, 16, 14]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 6/14: step-hindsight-2
+=== step-hindsight-2 (180 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=703.906,beE1=1810.261,beE2=1810.261
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=2.0
+  t= 60.0 s: beP2 slowness 2
+  p99 per 5 s: [17, 14, 16, 14, 16, 14, 15, 12, 18, 15, 14, 15, 16, 19, 17, 14, 15, 14, 14, 14, 17, 15, 34, 15, 15, 14, 16, 15, 15, 15, 17, 18, 14, 15, 25, 14]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 7/14: antagonist-hindsight-2
+=== antagonist-hindsight-2 (240 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1187.984,beE2=1810.261
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-antagonist-beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/antagonist -duty 0.6 -kind burn
+  t= 60.0 s: antagonist on beE1
+  t=180.0 s: antagonist off
+  p99 per 5 s: [14, 13, 11, 12, 12, 12, 10, 12, 11, 12, 11, 12, 13, 14, 14, 17, 12, 12, 13, 14, 12, 15, 13, 12, 14, 14, 14, 13, 13, 13, 14, 15, 14, 12, 15, 13, 12, 11, 12, 13, 12, 11, 11, 12, 12, 12, 14, 10]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 8/14: antagonist-rif-total-4
+=== antagonist-rif-total-4 (240 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-antagonist-beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/antagonist -duty 0.6 -kind burn
+  t= 60.0 s: antagonist on beE1
+  t=180.0 s: antagonist off
+  p99 per 5 s: [13, 10, 13, 14, 13, 11, 10, 11, 12, 12, 10, 13, 69, 97, 38, 14, 16, 21, 13, 17, 14, 13, 14, 13, 12, 13, 25, 16, 14, 13, 14, 14, 15, 14, 13, 25, 14, 11, 15, 15, 12, 13, 12, 17, 11, 10, 13, 11]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 9/14: antagonist-cpu-4
+=== antagonist-cpu-4 (240 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-antagonist-beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/antagonist -duty 0.6 -kind burn
+  t= 60.0 s: antagonist on beE1
+  t=180.0 s: antagonist off
+  p99 per 5 s: [12, 11, 11, 43, 12, 12, 11, 11, 11, 11, 10, 11, 130, 111, 47, 15, 13, 16, 12, 14, 15, 14, 13, 13, 13, 14, 15, 13, 14, 13, 14, 14, 13, 14, 16, 13, 13, 11, 12, 11, 12, 12, 11, 11, 11, 12, 12, 11]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 10/14: step-oracle-2
+=== step-oracle-2 (180 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=2.0
+  t= 60.0 s: beP2 slowness 2
+  p99 per 5 s: [11, 11, 11, 10, 11, 10, 10, 10, 10, 12, 11, 16, 266, 412, 1641, 3418, 5843, 6968, 8848, 9738, 11145, 12419, 14093, 15865, 17313, 18964, 21299, 22911, 24658, 26396, 28012, 0, 0, 0, 0, 0]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 11/14: step-cpu-5
+=== step-cpu-5 (180 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=2.0
+  t= 60.0 s: beP2 slowness 2
+  p99 per 5 s: [15, 11, 12, 11, 10, 10, 11, 12, 10, 11, 12, 14, 171, 273, 316, 375, 346, 192, 44, 18, 15, 14, 15, 17, 19, 16, 18, 15, 15, 16, 20, 19, 18, 14, 18, 17]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 12/14: step-rif-total-5
+=== step-rif-total-5 (180 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=2.0
+  t= 60.0 s: beP2 slowness 2
+  p99 per 5 s: [12, 11, 11, 10, 10, 11, 10, 11, 11, 10, 11, 23, 288, 786, 2573, 2529, 1950, 1607, 640, 223, 19, 19, 17, 15, 23, 20, 19, 26, 21, 15, 22, 19, 19, 15, 16, 21]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 13/14: antagonist-cpu-5
+=== antagonist-cpu-5 (240 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-antagonist-beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/antagonist -duty 0.6 -kind burn
+  t= 60.0 s: antagonist on beE1
+  t=180.0 s: antagonist off
+  p99 per 5 s: [12, 11, 11, 10, 11, 12, 10, 11, 11, 12, 10, 11, 111, 103, 77, 16, 14, 15, 15, 12, 13, 14, 17, 14, 14, 14, 13, 15, 15, 13, 15, 17, 13, 13, 14, 16, 16, 14, 14, 12, 13, 13, 12, 12, 11, 11, 10, 11]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+##### s12 unit 14/14: antagonist-rif-total-5
+=== antagonist-rif-total-5 (240 s)
++ ip netns exec beP1 curl -sf localhost:9100/slowness?set=1.6
++ ip netns exec beP2 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE1 curl -sf localhost:9100/slowness?set=1.0
++ ip netns exec beE2 curl -sf localhost:9100/slowness?set=1.0
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-antagonist-beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/antagonist -duty 0.6 -kind burn
+  t= 60.0 s: antagonist on beE1
+  t=180.0 s: antagonist off
+  p99 per 5 s: [12, 10, 11, 10, 12, 11, 11, 10, 11, 11, 10, 11, 31, 37, 17, 13, 13, 13, 15, 13, 13, 15, 12, 15, 16, 16, 14, 13, 18, 13, 15, 13, 16, 13, 18, 17, 17, 13, 11, 10, 10, 12, 14, 11, 12, 12, 13, 11]
+  long-lived: 0 errors, 100 connections; resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0
+== cleanup
+undone

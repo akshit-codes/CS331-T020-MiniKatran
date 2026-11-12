@@ -1,0 +1,255 @@
+=== preflight
+  client   ok, kernel 7.2.15-1-omarchy
+  lb       ok, kernel 7.0.0-42-generic
+  h1       ok, kernel 7.2.14-arch1-1
+  h2       ok, kernel 7.0.0-30-generic
+=== setup.sh up on every machine
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 /home/student/mini-unimog/bin/backend -calibrate
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 /home/student/mini-unimog/bin/backend -calibrate
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-beP1 -p NetworkNamespacePath=/run/netns/beP1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7268792 -slowness 1.6 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=6,8 --collect --unit=cs331-beP2 -p NetworkNamespacePath=/run/netns/beP2 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7268792 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-beE1 -p NetworkNamespacePath=/run/netns/beE1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7268792 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=6,8 --collect --unit=cs331-beE2 -p NetworkNamespacePath=/run/netns/beE2 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7268792 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role director
+loaded: director at TC ingress of wlp0s20f3 (VIP 10.2.0.1:8080), 4 backends
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h1
+loaded: 2 redirectors on h1 (forwarding true, SYN-cookie check true)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h2
+loaded: 2 redirectors on h2 (forwarding true, SYN-cookie check true)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl table equal
+  smoke test: 10/10 through the VIP
+  search {'experiment': 'denominator', 'backend': 'beP1', 'rep': 1} in [16, 31]
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.1.11:8080 -rate 23.4 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         23 req/s: p99 322.82 ms, errors 0.0000 -> ok
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.1.11:8080 -rate 27.3 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         27 req/s: p99 567.92 ms, errors 0.0000 -> ok
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.1.11:8080 -rate 39.1 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         39 req/s: p99 1497.20 ms, errors 0.0000 -> over  (requests waited to be sent)
+  => capacity 27.34375 above range
+  search {'experiment': 'denominator', 'backend': 'beP2', 'rep': 1} in [25, 50]
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.1.12:8080 -rate 37.5 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         38 req/s: p99 208.92 ms, errors 0.0000 -> ok
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.1.12:8080 -rate 43.8 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         44 req/s: p99 254.95 ms, errors 0.0000 -> ok
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.1.12:8080 -rate 62.5 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         62 req/s: p99 1604.41 ms, errors 0.0000 -> over  (requests waited to be sent)
+  => capacity 43.75 above range
+  search {'experiment': 'denominator', 'backend': 'beE1', 'rep': 1} in [25, 50]
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.2.13:8080 -rate 37.5 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         38 req/s: p99 626.20 ms, errors 0.0000 -> ok
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.2.13:8080 -rate 43.8 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         44 req/s: p99 820.78 ms, errors 0.0000 -> over  (requests waited to be sent)
+  => capacity 37.5 
+  search {'experiment': 'denominator', 'backend': 'beE2', 'rep': 1} in [25, 50]
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.2.14:8080 -rate 37.5 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         38 req/s: p99 461.98 ms, errors 0.0000 -> ok
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.2.14:8080 -rate 43.8 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         44 req/s: p99 694.69 ms, errors 0.0000 -> ok
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.11.2.14:8080 -rate 62.5 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         62 req/s: p99 1489.31 ms, errors 0.0000 -> over  (requests waited to be sent)
+  => capacity 43.75 above range
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl table beP1=27.344,beP2=43.750,beE1=37.500,beE2=43.750
+=== noise at 80% (122 req/s)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-sigmon env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/sigmon -out results/cluster-20261106-084421/s1/noise-0.8.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 121.9 -warmup 3s -duration 12s -conns 32 -reqs-per-conn 20
+== cleanup
+chown: changing ownership of 'results/cluster-20261106-084421/s1/runs.jsonl': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s1/denominators.json': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s1': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421': Operation not permitted
+=== tuning
+Signal noise σ(P): median over backends of the CV of P-second averages
+
+at 80% load:
+  signal      P=1s     P=2s     P=4s     P=8s
+  cpu        0.214      nan      nan      nan
+  rif        0.382      nan      nan      nan
+  cgroup     0.226      nan      nan      nan
+  psi        0.271      nan      nan      nan
+
+cgroup:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+    1s  1.5   0.226     0.302    0.339    0.170        801       20 s
+    1s  2.0   0.226     0.302    0.452    0.226        473       20 s
+    1s  3.0   0.226     0.302    0.678    0.339          0      never  <- chosen
+  note: at P=1s the simulator alone is noisier (0.302) than measured (0.226): tuning is pessimistic for cgroup
+cpu:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+    1s  1.5   0.214     0.302    0.322    0.161       1029       20 s
+    1s  2.0   0.214     0.302    0.429    0.214        608       20 s
+    1s  3.0   0.214     0.302    0.643    0.322          0      never  <- chosen
+  note: at P=1s the simulator alone is noisier (0.302) than measured (0.214): tuning is pessimistic for cpu
+rif:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+    1s  1.5   0.382     0.391    0.574    0.287       1406       20 s
+    1s  2.0   0.382     0.391    0.765    0.382        814       20 s
+    1s  3.0   0.382     0.391    1.147    0.574        470       20 s  <- chosen
+  note: no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (939)
+  note: at P=1s the simulator alone is noisier (0.391) than measured (0.382): tuning is pessimistic for rif
+rif-total:
+     P    k       σ   sim own     δ_on    δ_off  churn/min   recovery
+    1s  1.5   0.382     0.391    0.574    0.287       1406       20 s
+    1s  2.0   0.382     0.391    0.765    0.382        814       20 s
+    1s  3.0   0.382     0.391    1.147    0.574        470       20 s  <- chosen
+  note: no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (939)
+  note: at P=1s the simulator alone is noisier (0.391) than measured (0.382): tuning is pessimistic for rif-total
+
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 /home/student/mini-unimog/bin/backend -calibrate
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 /home/student/mini-unimog/bin/backend -calibrate
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-beP1 -p NetworkNamespacePath=/run/netns/beP1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7306496 -slowness 1.6 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=6,8 --collect --unit=cs331-beP2 -p NetworkNamespacePath=/run/netns/beP2 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7306496 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-beE1 -p NetworkNamespacePath=/run/netns/beE1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7306496 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=6,8 --collect --unit=cs331-beE2 -p NetworkNamespacePath=/run/netns/beE2 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7306496 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role director
+loaded: director at TC ingress of wlp0s20f3 (VIP 10.2.0.1:8080), 4 backends
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h1
+loaded: 2 redirectors on h1 (forwarding true, SYN-cookie check true)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h2
+loaded: 2 redirectors on h2 (forwarding true, SYN-cookie check true)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl table beP1=27.344,beP2=43.750,beE1=37.500,beE2=43.750
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl dump
+  search {'experiment': 'static', 'policy': 'oracle', 'rep': 1, 'shares': {'beP1': 0.179443359375, 'beP2': 0.287353515625, 'beE1': 0.24609375, 'beE2': 0.287109375}, 'predicted': 152.25148683092607} in [107, 160]
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 133.2 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+        133 req/s: p99 356.82 ms, errors 0.0000 -> ok  (requests waited to be sent)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 146.5 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+        147 req/s: p99 332.08 ms, errors 0.0000 -> ok  (requests waited to be sent)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 199.8 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+        200 req/s: p99 1846.53 ms, errors 0.0000 -> over  (requests waited to be sent)
+  => capacity 146.54205607476635 above range
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl table beP1=1.000,beP2=1.000,beE1=1.000,beE2=1.000
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl dump
+  search {'experiment': 'static', 'policy': 'equal', 'rep': 1, 'shares': {'beP1': 0.25, 'beP2': 0.25, 'beE1': 0.25, 'beE2': 0.25}, 'predicted': 109.375} in [77, 115]
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 95.7 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+         96 req/s: p99 541.25 ms, errors 0.0000 -> ok  (requests waited to be sent)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 105.3 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+        105 req/s: p99 563.97 ms, errors 0.0000 -> ok  (requests waited to be sent)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 143.6 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+        144 req/s: p99 614.10 ms, errors 0.0000 -> ok  (requests waited to be sent)
+  => capacity 143.5546875 above range
+=== controller cpu (P 1 s, band 0.643/0.322), converging 10 s at 75%
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-controller env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/controller -signal cpu -period 1s -delta-on 0.6432218768948668 -delta-off 0.3216109384474334 -out results/cluster-20261106-084421/s2/controller-cpu-1.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 114.3 -warmup 0s -duration 10s -conns 32 -reqs-per-conn 20
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl dump
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl dump
+  search {'experiment': 'controller', 'policy': 'ctl-cpu', 'rep': 1, 'shares': {'beP1': 0.201171875, 'beP2': 0.288330078125, 'beE1': 0.216064453125, 'beE2': 0.29443359375}, 'predicted': 135.92233009708738} in [95, 143]
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 118.9 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+        119 req/s: p99 376.73 ms, errors 0.0000 -> ok  (requests waited to be sent)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 130.8 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+        131 req/s: p99 698.44 ms, errors 0.0000 -> ok  (requests waited to be sent)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=8,9,10,11 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/loadgen -target 10.2.0.1:8080 -rate 178.4 -warmup 2s -duration 4s -conns 32 -reqs-per-conn 20
+        178 req/s: p99 2010.06 ms, errors 0.0000 -> over  (requests waited to be sent)
+  => capacity 130.82524271844662 above range
+== cleanup
+chown: changing ownership of 'results/cluster-20261106-084421/s1/runs.jsonl': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s1/denominators.json': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s1/noise-0.8.csv': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s1': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/tuning/noise.json': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/tuning/tuning.json': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/tuning/tuning.txt': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/tuning': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s2/runs.jsonl': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s2/table-cpu-1.txt': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s2': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421': Operation not permitted
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 /home/student/mini-unimog/bin/backend -calibrate
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2 --scope env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 /home/student/mini-unimog/bin/backend -calibrate
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-beP1 -p NetworkNamespacePath=/run/netns/beP1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7340288 -slowness 1.6 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=6,8 --collect --unit=cs331-beP2 -p NetworkNamespacePath=/run/netns/beP2 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7340288 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-beE1 -p NetworkNamespacePath=/run/netns/beE1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7340288 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=6,8 --collect --unit=cs331-beE2 -p NetworkNamespacePath=/run/netns/beE2 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/backend -work 7340288 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role director
+loaded: director at TC ingress of wlp0s20f3 (VIP 10.2.0.1:8080), 4 backends
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h1
+loaded: 2 redirectors on h1 (forwarding true, SYN-cookie check true)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h2
+loaded: 2 redirectors on h2 (forwarding true, SYN-cookie check true)
+=== antagonist-oracle-1 (25 s)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 curl -sf 'localhost:9100/slowness?set=1.6'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP2 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beE1 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beE2 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl table beP1=27.344,beP2=43.750,beE1=37.500,beE2=43.750
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-sigmon env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/sigmon -out results/cluster-20261106-084421/s3/antagonist-oracle-1-sigmon.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-resetmon env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/resetmon -out results/cluster-20261106-084421/s3/antagonist-oracle-1-resets.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-antagonist-beE1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/antagonist -duty 0.6 -kind burn
+  t=  5.0 s: antagonist on beE1
+  t= 20.0 s: antagonist off
+  p99 per 5 s: [427, 580, 598, 769, 400]
+  long-lived: 0 errors, 20 connections; 
+=== antagonist-cpu-1 (25 s)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 curl -sf 'localhost:9100/slowness?set=1.6'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP2 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beE1 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beE2 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl table beP1=27.344,beP2=43.750,beE1=37.500,beE2=43.750
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-sigmon env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/sigmon -out results/cluster-20261106-084421/s3/antagonist-cpu-1-sigmon.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-resetmon env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/resetmon -out results/cluster-20261106-084421/s3/antagonist-cpu-1-resets.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-controller env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/controller -signal cpu -period 1s -delta-on 0.6432218768948668 -delta-off 0.3216109384474334 -out results/cluster-20261106-084421/s3/antagonist-cpu-1-controller.csv -weights beP1=27.344,beP2=43.750,beE1=37.500,beE2=43.750
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-antagonist-beE1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/antagonist -duty 0.6 -kind burn
+  t=  5.0 s: antagonist on beE1
+  t= 20.0 s: antagonist off
+  p99 per 5 s: [519, 822, 747, 648, 345]
+  long-lived: 0 errors, 20 connections; 
+=== antagonist-rif-total-1 (25 s)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 curl -sf 'localhost:9100/slowness?set=1.6'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP2 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beE1 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beE2 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl table beP1=27.344,beP2=43.750,beE1=37.500,beE2=43.750
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-sigmon env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/sigmon -out results/cluster-20261106-084421/s3/antagonist-rif-total-1-sigmon.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-resetmon env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/resetmon -out results/cluster-20261106-084421/s3/antagonist-rif-total-1-resets.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-controller env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/controller -signal rif-total -period 1s -delta-on 1.1470046290880003 -delta-off 0.5735023145440001 -out results/cluster-20261106-084421/s3/antagonist-rif-total-1-controller.csv -weights beP1=27.344,beP2=43.750,beE1=37.500,beE2=43.750
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-antagonist-beE1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/antagonist -duty 0.6 -kind burn
+  t=  5.0 s: antagonist on beE1
+  t= 20.0 s: antagonist off
+  p99 per 5 s: [394, 768, 1115, 1008, 371]
+  long-lived: 0 errors, 20 connections; 
+=== antagonist-cpu-noredirect-1 (25 s)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role director
+loaded: director at TC ingress of wlp0s20f3 (VIP 10.2.0.1:8080), 4 backends
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h1 -no-forward
+loaded: 2 redirectors on h1 (forwarding false, SYN-cookie check true)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h2 -no-forward
+loaded: 2 redirectors on h2 (forwarding false, SYN-cookie check true)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP1 curl -sf 'localhost:9100/slowness?set=1.6'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beP2 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beE1 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= ip netns exec beE2 curl -sf 'localhost:9100/slowness?set=1.0'
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl table beP1=27.344,beP2=43.750,beE1=37.500,beE2=43.750
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-sigmon env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/sigmon -out results/cluster-20261106-084421/s3/antagonist-cpu-noredirect-1-sigmon.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.63 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-resetmon env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/resetmon -out results/cluster-20261106-084421/s3/antagonist-cpu-noredirect-1-resets.csv
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog --collect --unit=cs331-tool-controller env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/controller -signal cpu -period 1s -delta-on 0.6432218768948668 -delta-off 0.3216109384474334 -out results/cluster-20261106-084421/s3/antagonist-cpu-noredirect-1-controller.csv -weights beP1=27.344,beP2=43.750,beE1=37.500,beE2=43.750
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo systemd-run --quiet --slice=cs331.slice --working-directory=/home/student/mini-unimog -p AllowedCPUs=2,4 --collect --unit=cs331-antagonist-beE1 env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/antagonist -duty 0.6 -kind burn
+  t=  5.0 s: antagonist on beE1
+  t= 20.1 s: antagonist off
+  p99 per 5 s: [414, 421, 497, 502, 355]
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.8 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role director
+loaded: director at TC ingress of wlp0s20f3 (VIP 10.2.0.1:8080), 4 backends
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.185 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h1
+loaded: 2 redirectors on h1 (forwarding true, SYN-cookie check true)
++ ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPersist=10m -o ControlPath=~/.ssh/cs331-%r@%h:%p student@10.142.103.243 cd /home/student/mini-unimog && sudo env CS331_CLUSTER=cluster/cluster.conf CS331_HOST_NETNS= /home/student/mini-unimog/bin/lbctl load -role redirectors -host h2
+loaded: 2 redirectors on h2 (forwarding true, SYN-cookie check true)
+  long-lived: 0 errors, 20 connections; 
+== cleanup
+chown: changing ownership of 'results/cluster-20261106-084421/s1/runs.jsonl': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s1/denominators.json': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s1/noise-0.8.csv': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s1': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/tuning/noise.json': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/tuning/tuning.json': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/tuning/tuning.txt': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/tuning': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s2/runs.jsonl': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s2/table-cpu-1.txt': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s2/controller-cpu-1.csv': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s2': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s3/runs.jsonl': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s3/antagonist-oracle-1-resets.csv': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s3/antagonist-cpu-1-resets.csv': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s3/antagonist-rif-total-1-resets.csv': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s3/antagonist-cpu-noredirect-1-resets.csv': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421/s3': Operation not permitted
+chown: changing ownership of 'results/cluster-20261106-084421': Operation not permitted
+=== setup.sh down on every machine
+done: results/cluster-20261106-084421/summary.md

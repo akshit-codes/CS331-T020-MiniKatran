@@ -1,0 +1,174 @@
+[
+  {
+    "signal": "rif",
+    "loadgen": {
+      "target": "10.2.0.1:8080",
+      "target_rate": 3000,
+      "arrival": "poisson",
+      "conns": 64,
+      "warmup_s": 2,
+      "duration_s": 90,
+      "requests": 269609,
+      "ok": 269609,
+      "errors": 0,
+      "expired": 0,
+      "gen_dropped": 0,
+      "connections": 13806,
+      "error_rate": 0,
+      "achieved_rate": 2995.6555555555556,
+      "latency_ms": {
+        "p50": 2.476295,
+        "p90": 4.242665,
+        "p99": 5.953027,
+        "p999": 7.805592,
+        "max": 19.497273
+      },
+      "send_delay_ms": {
+        "p50": 0.062601,
+        "p90": 0.104763,
+        "p99": 0.385493,
+        "p999": 1.173515,
+        "max": 2.807492
+      },
+      "dispatch_lag_ms": {
+        "p50": 8.8e-05,
+        "p90": 0.000118,
+        "p99": 0.0018,
+        "p999": 0.036261,
+        "max": 1.605541
+      },
+      "window_p99_ms": [
+        6.191246,
+        6.040578,
+        5.867739,
+        5.736243,
+        5.721714,
+        5.987277,
+        5.592638,
+        6.156469,
+        6.353069
+      ]
+    },
+    "first": {
+      "t": "2.0",
+      "generation": "2",
+      "mean": "0.2703",
+      "max_dev": "0.4073",
+      "moves": "46",
+      "swaps": "46",
+      "reason": "46 moves",
+      "u_beP1": "0.2542",
+      "buckets_beP1": "689",
+      "u_beP2": "0.1602",
+      "buckets_beP2": "723",
+      "u_beE1": "0.3227",
+      "buckets_beE1": "1345",
+      "u_beE2": "0.2809",
+      "buckets_beE2": "1339"
+    },
+    "last": {
+      "t": "96.0",
+      "generation": "48",
+      "mean": "0.0000",
+      "max_dev": "NaN",
+      "moves": "0",
+      "swaps": "0",
+      "reason": "low load",
+      "u_beP1": "0.0000",
+      "buckets_beP1": "610",
+      "u_beP2": "0.0000",
+      "buckets_beP2": "984",
+      "u_beE1": "0.0000",
+      "buckets_beE1": "1254",
+      "u_beE2": "0.0000",
+      "buckets_beE2": "1248"
+    },
+    "moves": 2222
+  },
+  {
+    "signal": "cpu",
+    "loadgen": {
+      "target": "10.2.0.1:8080",
+      "target_rate": 3000,
+      "arrival": "poisson",
+      "conns": 64,
+      "warmup_s": 2,
+      "duration_s": 90,
+      "requests": 269609,
+      "ok": 269609,
+      "errors": 0,
+      "expired": 0,
+      "gen_dropped": 0,
+      "connections": 13809,
+      "error_rate": 0,
+      "achieved_rate": 2995.6555555555556,
+      "latency_ms": {
+        "p50": 2.488831,
+        "p90": 4.220969,
+        "p99": 5.825213,
+        "p999": 7.837574,
+        "max": 16.078968
+      },
+      "send_delay_ms": {
+        "p50": 0.062595,
+        "p90": 0.10451,
+        "p99": 0.386361,
+        "p999": 1.250931,
+        "max": 4.73678
+      },
+      "dispatch_lag_ms": {
+        "p50": 8.8e-05,
+        "p90": 0.000117,
+        "p99": 0.001762,
+        "p999": 0.040849,
+        "max": 5.362396
+      },
+      "window_p99_ms": [
+        5.857079,
+        5.746991,
+        6.162975,
+        5.690063,
+        5.72454,
+        5.994963,
+        5.852651,
+        5.659301,
+        5.741615
+      ]
+    },
+    "first": {
+      "t": "2.0",
+      "generation": "2",
+      "mean": "0.2186",
+      "max_dev": "0.3946",
+      "moves": "47",
+      "swaps": "47",
+      "reason": "47 moves",
+      "u_beP1": "0.2230",
+      "buckets_beP1": "672",
+      "u_beP2": "0.1324",
+      "buckets_beP2": "723",
+      "u_beE1": "0.2072",
+      "buckets_beE1": "1372",
+      "u_beE2": "0.2709",
+      "buckets_beE2": "1329"
+    },
+    "last": {
+      "t": "96.0",
+      "generation": "45",
+      "mean": "0.0186",
+      "max_dev": "2.1876",
+      "moves": "0",
+      "swaps": "0",
+      "reason": "low load",
+      "u_beP1": "0.0593",
+      "buckets_beP1": "539",
+      "u_beP2": "0.0223",
+      "buckets_beP2": "1032",
+      "u_beE1": "0.0088",
+      "buckets_beE1": "1277",
+      "u_beE2": "0.0062",
+      "buckets_beE2": "1248"
+    },
+    "moves": 1826
+  }
+]

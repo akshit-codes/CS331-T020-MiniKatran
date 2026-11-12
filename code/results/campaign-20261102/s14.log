@@ -1,0 +1,258 @@
+=== s14: 0 of 26 units done already
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/scripts/tune.sh apply
+applied (disabled 44 deep idle states, moved 47 interrupts); undo with: sudo /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/scripts/tune.sh undo
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/scripts/topology.sh up
+testbed up
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=8 --scope ip netns exec beP1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -calibrate
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16 --scope ip netns exec beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -calibrate
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=8,10 --collect --unit=cs331-beP1 ip netns exec beP1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -work 101362 -slowness 1.6 -cost exp -mode pool -listen :8080 -metrics :9100
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=12,14 --collect --unit=cs331-beP2 ip netns exec beP2 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -work 101362 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=16-19 --collect --unit=cs331-beE1 ip netns exec beE1 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -work 101362 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=20-23 --collect --unit=cs331-beE2 ip netns exec beE2 /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/backend -work 101362 -slowness 1.0 -cost exp -mode pool -listen :8080 -metrics :9100
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl load
+##### s14 unit 1/26: fixed-oracle-1
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 80%: p99 10.49 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 90%: p99 13.48 ms, errors 0.0000
+##### s14 unit 2/26: fixed-ctl-cpu-1
+=== controller cpu (P 2 s, band 0.169/0.084), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 80%: p99 10.84 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 90%: p99 13.93 ms, errors 0.0000
+##### s14 unit 3/26: fixed-ctl-rif-total-1
+=== controller rif-total (P 2 s, band 0.482/0.241), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 80%: p99 13.08 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 90%: p99 29.36 ms, errors 0.0000
+##### s14 unit 4/26: fixed-cores-1
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=2.000,beP2=2.000,beE1=4.000,beE2=4.000
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 80%: p99 13.83 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 90%: p99 32.66 ms, errors 0.0000
+##### s14 unit 5/26: oracle-1
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
+  search {'experiment': 'static', 'policy': 'oracle', 'rep': 1, 'shares': {'beP1': 0.153564453125, 'beP2': 0.265625, 'beE1': 0.29052734375, 'beE2': 0.290283203125}, 'predicted': 6230.948347112265} in [5296, 7166]
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 6230.9 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       6231 req/s: p99  24.55 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5763.6 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       5764 req/s: p99  16.05 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5997.3 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       5997 req/s: p99  17.11 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 6114.1 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       6114 req/s: p99  16.51 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 6172.5 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       6173 req/s: p99  20.76 ms, errors 0.0000 -> over
+  => capacity 6114.118065603909 
+##### s14 unit 6/26: direct-1
+  search {'experiment': 'direct-mix', 'policy': 'direct', 'rep': 1} in [5299, 7169]
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6233.8 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=957.0,10.1.0.12:8080=1656.2,10.1.0.13:8080=1810.3,10.1.0.14:8080=1810.3
+       6234 req/s: p99  20.17 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 5766.3 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=885.3,10.1.0.12:8080=1532.0,10.1.0.13:8080=1674.5,10.1.0.14:8080=1674.5
+       5766 req/s: p99  13.97 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6000.0 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=921.1,10.1.0.12:8080=1594.1,10.1.0.13:8080=1742.4,10.1.0.14:8080=1742.4
+       6000 req/s: p99  16.08 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6116.9 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=939.1,10.1.0.12:8080=1625.2,10.1.0.13:8080=1776.3,10.1.0.14:8080=1776.3
+       6117 req/s: p99  16.23 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6175.4 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=948.1,10.1.0.12:8080=1640.7,10.1.0.13:8080=1793.3,10.1.0.14:8080=1793.3
+       6175 req/s: p99  16.96 ms, errors 0.0000 -> ok
+  => capacity 6175.361091585021 
+##### s14 unit 7/26: fixed-ctl-rif-total-2
+=== controller rif-total (P 2 s, band 0.482/0.241), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 90%: p99 24.68 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 80%: p99 12.86 ms, errors 0.0000
+##### s14 unit 8/26: fixed-cores-2
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=2.000,beP2=2.000,beE1=4.000,beE2=4.000
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 90%: p99 48.76 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 80%: p99 13.34 ms, errors 0.0000
+##### s14 unit 9/26: fixed-oracle-2
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 90%: p99 15.06 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 80%: p99 10.58 ms, errors 0.0000
+##### s14 unit 10/26: fixed-ctl-cpu-2
+=== controller cpu (P 2 s, band 0.169/0.084), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 90%: p99 14.72 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 80%: p99 10.83 ms, errors 0.0000
+##### s14 unit 11/26: direct-2
+  search {'experiment': 'direct-mix', 'policy': 'direct', 'rep': 2} in [5299, 7169]
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6233.8 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=957.0,10.1.0.12:8080=1656.2,10.1.0.13:8080=1810.3,10.1.0.14:8080=1810.3
+       6234 req/s: p99  18.44 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6701.3 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=1028.8,10.1.0.12:8080=1780.5,10.1.0.13:8080=1946.0,10.1.0.14:8080=1946.0
+       6701 req/s: p99  43.92 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6467.6 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=992.9,10.1.0.12:8080=1718.4,10.1.0.13:8080=1878.1,10.1.0.14:8080=1878.1
+       6468 req/s: p99  23.20 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6350.7 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=975.0,10.1.0.12:8080=1687.3,10.1.0.13:8080=1844.2,10.1.0.14:8080=1844.2
+       6351 req/s: p99  23.55 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6292.2 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=966.0,10.1.0.12:8080=1671.8,10.1.0.13:8080=1827.2,10.1.0.14:8080=1827.2
+       6292 req/s: p99  19.52 ms, errors 0.0000 -> ok
+  => capacity 6292.244897734895 
+##### s14 unit 12/26: oracle-2
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
+  search {'experiment': 'static', 'policy': 'oracle', 'rep': 2, 'shares': {'beP1': 0.153564453125, 'beP2': 0.265625, 'beE1': 0.29052734375, 'beE2': 0.290283203125}, 'predicted': 6230.948347112265} in [5296, 7166]
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 6230.9 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       6231 req/s: p99  27.79 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5763.6 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       5764 req/s: p99  15.27 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5997.3 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       5997 req/s: p99  17.96 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 6114.1 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       6114 req/s: p99  49.23 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 6055.7 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       6056 req/s: p99  26.59 ms, errors 0.0000 -> over
+  => capacity 5997.287784095554 
+##### s14 unit 13/26: fixed-cores-3
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=2.000,beP2=2.000,beE1=4.000,beE2=4.000
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 80%: p99 13.23 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 90%: p99 33.89 ms, errors 0.0000
+##### s14 unit 14/26: fixed-ctl-cpu-3
+=== controller cpu (P 2 s, band 0.169/0.084), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 80%: p99 11.13 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 90%: p99 16.25 ms, errors 0.0000
+##### s14 unit 15/26: fixed-ctl-rif-total-3
+=== controller rif-total (P 2 s, band 0.482/0.241), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 80%: p99 12.84 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 90%: p99 19.83 ms, errors 0.0000
+##### s14 unit 16/26: fixed-oracle-3
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 80%: p99 10.62 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 90%: p99 13.40 ms, errors 0.0000
+##### s14 unit 17/26: oracle-3
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
+  search {'experiment': 'static', 'policy': 'oracle', 'rep': 3, 'shares': {'beP1': 0.153564453125, 'beP2': 0.265625, 'beE1': 0.29052734375, 'beE2': 0.290283203125}, 'predicted': 6230.948347112265} in [5296, 7166]
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 6230.9 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       6231 req/s: p99  23.11 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5763.6 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       5764 req/s: p99  16.26 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5997.3 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       5997 req/s: p99  16.10 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 6114.1 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       6114 req/s: p99  24.41 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 6055.7 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20
+       6056 req/s: p99  20.79 ms, errors 0.0000 -> over
+  => capacity 5997.287784095554 
+##### s14 unit 18/26: direct-3
+  search {'experiment': 'direct-mix', 'policy': 'direct', 'rep': 3} in [5299, 7169]
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6233.8 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=957.0,10.1.0.12:8080=1656.2,10.1.0.13:8080=1810.3,10.1.0.14:8080=1810.3
+       6234 req/s: p99  17.83 ms, errors 0.0000 -> ok
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6701.3 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=1028.8,10.1.0.12:8080=1780.5,10.1.0.13:8080=1946.0,10.1.0.14:8080=1946.0
+       6701 req/s: p99  46.00 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6467.6 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=992.9,10.1.0.12:8080=1718.4,10.1.0.13:8080=1878.1,10.1.0.14:8080=1878.1
+       6468 req/s: p99  24.35 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6350.7 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=975.0,10.1.0.12:8080=1687.3,10.1.0.13:8080=1844.2,10.1.0.14:8080=1844.2
+       6351 req/s: p99  20.26 ms, errors 0.0000 -> over
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.1.0.11:8080 -rate 6292.2 -warmup 5s -duration 20s -conns 512 -reqs-per-conn 20 -targets 10.1.0.11:8080=966.0,10.1.0.12:8080=1671.8,10.1.0.13:8080=1827.2,10.1.0.14:8080=1827.2
+       6292 req/s: p99  19.63 ms, errors 0.0000 -> ok
+  => capacity 6292.244897734895 
+##### s14 unit 19/26: fixed-ctl-cpu-4
+=== controller cpu (P 2 s, band 0.169/0.084), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 90%: p99 14.73 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 80%: p99 11.12 ms, errors 0.0000
+##### s14 unit 20/26: fixed-oracle-4
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 90%: p99 13.75 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 80%: p99 10.60 ms, errors 0.0000
+##### s14 unit 21/26: fixed-cores-4
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=2.000,beP2=2.000,beE1=4.000,beE2=4.000
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 90%: p99 26.70 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 80%: p99 13.34 ms, errors 0.0000
+##### s14 unit 22/26: fixed-ctl-rif-total-4
+=== controller rif-total (P 2 s, band 0.482/0.241), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 90%: p99 16.52 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 80%: p99 12.04 ms, errors 0.0000
+##### s14 unit 23/26: fixed-ctl-rif-total-5
+=== controller rif-total (P 2 s, band 0.482/0.241), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 80%: p99 12.53 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-rif-total at 90%: p99 16.16 ms, errors 0.0000
+##### s14 unit 24/26: fixed-oracle-5
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=957.031,beP2=1656.250,beE1=1810.261,beE2=1810.261
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 80%: p99 10.60 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    oracle at 90%: p99 13.54 ms, errors 0.0000
+##### s14 unit 25/26: fixed-ctl-cpu-5
+=== controller cpu (P 2 s, band 0.169/0.084), converging 90 s at 75%
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4675.4 -warmup 0s -duration 90s -conns 512 -reqs-per-conn 20
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 80%: p99 11.54 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    ctl-cpu at 90%: p99 15.01 ms, errors 0.0000
+##### s14 unit 26/26: fixed-cores-5
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl table beP1=2.000,beP2=2.000,beE1=4.000,beE2=4.000
++ /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/lbctl dump
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 4987.0 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 80%: p99 14.14 ms, errors 0.0000
++ systemd-run --quiet --slice=cs331.slice -p AllowedCPUs=2,3,4,5 --scope ip netns exec cli /home/m4nny/Code/Courses/CS331-T020-MiniKatran/code/bin/loadgen -target 10.2.0.1:8080 -rate 5610.4 -warmup 5s -duration 60s -conns 512 -reqs-per-conn 20
+    cores at 90%: p99 27.94 ms, errors 0.0000
+== cleanup
+undone

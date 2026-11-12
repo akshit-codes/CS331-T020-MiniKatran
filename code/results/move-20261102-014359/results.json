@@ -1,0 +1,251 @@
+[
+  {
+    "run": "A: second hops",
+    "moved_buckets": 2047,
+    "long_lived": {
+      "requests": 84221,
+      "errors": 0,
+      "connections": 300
+    },
+    "long_lived_reconnects": 0,
+    "churn": {
+      "requests": 5595,
+      "errors": 0,
+      "connections": 6005
+    },
+    "server_resets": 0,
+    "server_resets_after_switch": 0,
+    "server_resets_in_moved_buckets": 0,
+    "client_resets_received": 0,
+    "resetmon": "resets: server sent 0, client received 0 (0 distinct client sockets), client sent 0, server received 0",
+    "rsts_sent_per_backend": {
+      "beP1": 1,
+      "beP2": 1,
+      "beE1": 1,
+      "beE2": 1
+    },
+    "rsts_sent_by_client": 0,
+    "retransmits_per_backend": {
+      "beP1": 0,
+      "beP2": 0,
+      "beE1": 0,
+      "beE2": 0
+    },
+    "keepalive_probes_per_backend": {
+      "beP1": 0,
+      "beP2": 0,
+      "beE1": 0,
+      "beE2": 0
+    },
+    "switch_time_s": 35944.033561739,
+    "cookies": {
+      "SyncookiesSent": 1907,
+      "SyncookiesRecv": 1907,
+      "SyncookiesFailed": 0
+    },
+    "redirectors": {
+      "beP1": {
+        "keep_hopped": 27264,
+        "keep_no_second": 21043,
+        "keep_syn": 0,
+        "keep_socket": 0,
+        "keep_cookie": 0,
+        "forward": 0,
+        "bad": 0
+      },
+      "beP2": {
+        "keep_hopped": 14012,
+        "keep_no_second": 29983,
+        "keep_syn": 910,
+        "keep_socket": 4550,
+        "keep_cookie": 0,
+        "forward": 27264,
+        "bad": 0
+      },
+      "beE1": {
+        "keep_hopped": 13256,
+        "keep_no_second": 43717,
+        "keep_syn": 598,
+        "keep_socket": 2392,
+        "keep_cookie": 598,
+        "forward": 14012,
+        "bad": 0
+      },
+      "beE2": {
+        "keep_hopped": 0,
+        "keep_no_second": 57517,
+        "keep_syn": 309,
+        "keep_socket": 1545,
+        "keep_cookie": 0,
+        "forward": 13256,
+        "bad": 0
+      }
+    }
+  },
+  {
+    "run": "B: no second hops",
+    "moved_buckets": 2047,
+    "long_lived": {
+      "requests": 84221,
+      "errors": 146,
+      "connections": 446
+    },
+    "long_lived_reconnects": 146,
+    "churn": {
+      "requests": 5595,
+      "errors": 0,
+      "connections": 6005
+    },
+    "server_resets": 192,
+    "server_resets_after_switch": 192,
+    "server_resets_in_moved_buckets": 192,
+    "client_resets_received": 146,
+    "resetmon": "resets: server sent 192, client received 146 (146 distinct client sockets), client sent 84, server received 0",
+    "rsts_sent_per_backend": {
+      "beP1": 1,
+      "beP2": 100,
+      "beE1": 69,
+      "beE2": 26
+    },
+    "rsts_sent_by_client": 84,
+    "retransmits_per_backend": {
+      "beP1": 0,
+      "beP2": 0,
+      "beE1": 0,
+      "beE2": 0
+    },
+    "keepalive_probes_per_backend": {
+      "beP1": 77,
+      "beP2": 51,
+      "beE1": 18,
+      "beE2": 0
+    },
+    "switch_time_s": 35976.062612817,
+    "cookies": {
+      "SyncookiesSent": 1924,
+      "SyncookiesRecv": 1924,
+      "SyncookiesFailed": 68
+    },
+    "redirectors": {
+      "beP1": {
+        "keep_hopped": 0,
+        "keep_no_second": 21685,
+        "keep_syn": 0,
+        "keep_socket": 0,
+        "keep_cookie": 0,
+        "forward": 0,
+        "bad": 0
+      },
+      "beP2": {
+        "keep_hopped": 0,
+        "keep_no_second": 60181,
+        "keep_syn": 0,
+        "keep_socket": 0,
+        "keep_cookie": 0,
+        "forward": 0,
+        "bad": 0
+      },
+      "beE1": {
+        "keep_hopped": 0,
+        "keep_no_second": 61709,
+        "keep_syn": 0,
+        "keep_socket": 0,
+        "keep_cookie": 0,
+        "forward": 0,
+        "bad": 0
+      },
+      "beE2": {
+        "keep_hopped": 0,
+        "keep_no_second": 74411,
+        "keep_syn": 0,
+        "keep_socket": 0,
+        "keep_cookie": 0,
+        "forward": 0,
+        "bad": 0
+      }
+    }
+  },
+  {
+    "run": "C: second hops, no syncookie check",
+    "moved_buckets": 2047,
+    "long_lived": {
+      "requests": 84221,
+      "errors": 0,
+      "connections": 300
+    },
+    "long_lived_reconnects": 0,
+    "churn": {
+      "requests": 5595,
+      "errors": 671,
+      "connections": 5985
+    },
+    "server_resets": 1290,
+    "server_resets_after_switch": 1290,
+    "server_resets_in_moved_buckets": 1290,
+    "client_resets_received": 671,
+    "resetmon": "resets: server sent 1290, client received 671 (671 distinct client sockets), client sent 0, server received 0",
+    "rsts_sent_per_backend": {
+      "beP1": 1,
+      "beP2": 1291,
+      "beE1": 1,
+      "beE2": 1
+    },
+    "rsts_sent_by_client": 0,
+    "retransmits_per_backend": {
+      "beP1": 0,
+      "beP2": 0,
+      "beE1": 0,
+      "beE2": 0
+    },
+    "keepalive_probes_per_backend": {
+      "beP1": 0,
+      "beP2": 0,
+      "beE1": 0,
+      "beE2": 0
+    },
+    "switch_time_s": 36008.107581424,
+    "cookies": {
+      "SyncookiesSent": 1971,
+      "SyncookiesRecv": 1300,
+      "SyncookiesFailed": 0
+    },
+    "redirectors": {
+      "beP1": {
+        "keep_hopped": 28033,
+        "keep_no_second": 21470,
+        "keep_syn": 0,
+        "keep_socket": 0,
+        "keep_cookie": 0,
+        "forward": 0,
+        "bad": 0
+      },
+      "beP2": {
+        "keep_hopped": 16782,
+        "keep_no_second": 33399,
+        "keep_syn": 858,
+        "keep_socket": 4290,
+        "keep_cookie": 0,
+        "forward": 28033,
+        "bad": 0
+      },
+      "beE1": {
+        "keep_hopped": 8470,
+        "keep_no_second": 35877,
+        "keep_syn": 671,
+        "keep_socket": 0,
+        "keep_cookie": 0,
+        "forward": 16782,
+        "bad": 0
+      },
+      "beE2": {
+        "keep_hopped": 0,
+        "keep_no_second": 63961,
+        "keep_syn": 303,
+        "keep_socket": 1515,
+        "keep_cookie": 0,
+        "forward": 8470,
+        "bad": 0
+      }
+    }
+  }
+]

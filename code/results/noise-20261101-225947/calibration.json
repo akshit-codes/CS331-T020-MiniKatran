@@ -1,0 +1,33 @@
+{
+  "cost_ms": 1.0,
+  "work": 101289,
+  "p_units_per_ms": 101289.0,
+  "e_units_per_ms": 54942.4,
+  "e_slowdown": 1.8435488802818951,
+  "theoretical": {
+    "P": 2000.0,
+    "E": 2169.7282034574337
+  },
+  "rough": {
+    "P": 1600.0,
+    "E": 1735.782562765947
+  },
+  "slo": {
+    "p99_ms": 10.0,
+    "error_rate": 0.001,
+    "min_achieved": 0.98
+  },
+  "settings": {
+    "rough_measure": 15,
+    "repeats": 10,
+    "repeat_warmup": 20,
+    "repeat_measure": 60,
+    "repeat_rest": 10,
+    "probes": 6,
+    "probe_warmup": 10,
+    "probe_measure": 40,
+    "probe_rest": 5,
+    "capacity_reps": 5,
+    "coupling_reps": 3
+  }
+}

@@ -1,0 +1,13 @@
+# Scripts and source always have LF line endings, also on a Windows checkout:
+# a CRLF shell script fails on the Linux machines that run it.
+# No "* text=auto": results/ holds data files with CRLF that git must leave alone.
+*.sh    text eol=lf
+*.py    text eol=lf
+*.go    text eol=lf
+*.c     text eol=lf
+*.h     text eol=lf
+*.md    text eol=lf
+Makefile text eol=lf
+*.env   text eol=lf
+*.conf  text eol=lf
+*.example text eol=lf

@@ -1,0 +1,232 @@
+[
+  {
+    "signal": "cgroup",
+    "chosen": {
+      "period_s": 1,
+      "k": 3,
+      "sigma": 0.22613173238304496,
+      "sim_intrinsic": 0.30179134068132957,
+      "sim_added_noise": 0,
+      "delta_on": 0.6783951971491349,
+      "delta_off": 0.33919759857456744,
+      "churn_moves_per_min": 0,
+      "recovery_s": null,
+      "meets_churn_cap": true,
+      "admitted": true
+    },
+    "candidates": [
+      {
+        "period_s": 1,
+        "k": 1.5,
+        "sigma": 0.22613173238304496,
+        "sim_intrinsic": 0.30179134068132957,
+        "sim_added_noise": 0,
+        "delta_on": 0.33919759857456744,
+        "delta_off": 0.16959879928728372,
+        "churn_moves_per_min": 801,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": false
+      },
+      {
+        "period_s": 1,
+        "k": 2,
+        "sigma": 0.22613173238304496,
+        "sim_intrinsic": 0.30179134068132957,
+        "sim_added_noise": 0,
+        "delta_on": 0.4522634647660899,
+        "delta_off": 0.22613173238304496,
+        "churn_moves_per_min": 473,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": false
+      },
+      {
+        "period_s": 1,
+        "k": 3,
+        "sigma": 0.22613173238304496,
+        "sim_intrinsic": 0.30179134068132957,
+        "sim_added_noise": 0,
+        "delta_on": 0.6783951971491349,
+        "delta_off": 0.33919759857456744,
+        "churn_moves_per_min": 0,
+        "recovery_s": null,
+        "meets_churn_cap": true,
+        "admitted": true
+      }
+    ]
+  },
+  {
+    "signal": "cpu",
+    "chosen": {
+      "period_s": 1,
+      "k": 3,
+      "sigma": 0.21440729229828892,
+      "sim_intrinsic": 0.30179134068132957,
+      "sim_added_noise": 0,
+      "delta_on": 0.6432218768948668,
+      "delta_off": 0.3216109384474334,
+      "churn_moves_per_min": 0,
+      "recovery_s": null,
+      "meets_churn_cap": true,
+      "admitted": true
+    },
+    "candidates": [
+      {
+        "period_s": 1,
+        "k": 1.5,
+        "sigma": 0.21440729229828892,
+        "sim_intrinsic": 0.30179134068132957,
+        "sim_added_noise": 0,
+        "delta_on": 0.3216109384474334,
+        "delta_off": 0.1608054692237167,
+        "churn_moves_per_min": 1029,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": false
+      },
+      {
+        "period_s": 1,
+        "k": 2,
+        "sigma": 0.21440729229828892,
+        "sim_intrinsic": 0.30179134068132957,
+        "sim_added_noise": 0,
+        "delta_on": 0.42881458459657784,
+        "delta_off": 0.21440729229828892,
+        "churn_moves_per_min": 607.5,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": false
+      },
+      {
+        "period_s": 1,
+        "k": 3,
+        "sigma": 0.21440729229828892,
+        "sim_intrinsic": 0.30179134068132957,
+        "sim_added_noise": 0,
+        "delta_on": 0.6432218768948668,
+        "delta_off": 0.3216109384474334,
+        "churn_moves_per_min": 0,
+        "recovery_s": null,
+        "meets_churn_cap": true,
+        "admitted": true
+      }
+    ]
+  },
+  {
+    "signal": "rif",
+    "chosen": {
+      "period_s": 1,
+      "k": 3,
+      "sigma": 0.3823348763626667,
+      "sim_intrinsic": 0.39143113741672836,
+      "sim_added_noise": 0,
+      "delta_on": 1.1470046290880003,
+      "delta_off": 0.5735023145440001,
+      "churn_moves_per_min": 469.5,
+      "recovery_s": 20,
+      "meets_churn_cap": false,
+      "admitted": true
+    },
+    "note": "no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (939)",
+    "candidates": [
+      {
+        "period_s": 1,
+        "k": 1.5,
+        "sigma": 0.3823348763626667,
+        "sim_intrinsic": 0.39143113741672836,
+        "sim_added_noise": 0,
+        "delta_on": 0.5735023145440001,
+        "delta_off": 0.28675115727200007,
+        "churn_moves_per_min": 1406.5,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": false
+      },
+      {
+        "period_s": 1,
+        "k": 2,
+        "sigma": 0.3823348763626667,
+        "sim_intrinsic": 0.39143113741672836,
+        "sim_added_noise": 0,
+        "delta_on": 0.7646697527253334,
+        "delta_off": 0.3823348763626667,
+        "churn_moves_per_min": 813.5,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": true
+      },
+      {
+        "period_s": 1,
+        "k": 3,
+        "sigma": 0.3823348763626667,
+        "sim_intrinsic": 0.39143113741672836,
+        "sim_added_noise": 0,
+        "delta_on": 1.1470046290880003,
+        "delta_off": 0.5735023145440001,
+        "churn_moves_per_min": 469.5,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": true
+      }
+    ]
+  },
+  {
+    "signal": "rif-total",
+    "chosen": {
+      "period_s": 1,
+      "k": 3,
+      "sigma": 0.3823348763626667,
+      "sim_intrinsic": 0.39143113741672836,
+      "sim_added_noise": 0,
+      "delta_on": 1.1470046290880003,
+      "delta_off": 0.5735023145440001,
+      "churn_moves_per_min": 469.5,
+      "recovery_s": 20,
+      "meets_churn_cap": false,
+      "admitted": true
+    },
+    "note": "no setting meets the cap of 40 moves/min; admitted up to 2 × the least churn (939)",
+    "candidates": [
+      {
+        "period_s": 1,
+        "k": 1.5,
+        "sigma": 0.3823348763626667,
+        "sim_intrinsic": 0.39143113741672836,
+        "sim_added_noise": 0,
+        "delta_on": 0.5735023145440001,
+        "delta_off": 0.28675115727200007,
+        "churn_moves_per_min": 1406.5,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": false
+      },
+      {
+        "period_s": 1,
+        "k": 2,
+        "sigma": 0.3823348763626667,
+        "sim_intrinsic": 0.39143113741672836,
+        "sim_added_noise": 0,
+        "delta_on": 0.7646697527253334,
+        "delta_off": 0.3823348763626667,
+        "churn_moves_per_min": 813.5,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": true
+      },
+      {
+        "period_s": 1,
+        "k": 3,
+        "sigma": 0.3823348763626667,
+        "sim_intrinsic": 0.39143113741672836,
+        "sim_added_noise": 0,
+        "delta_on": 1.1470046290880003,
+        "delta_off": 0.5735023145440001,
+        "churn_moves_per_min": 469.5,
+        "recovery_s": 20,
+        "meets_churn_cap": false,
+        "admitted": true
+      }
+    ]
+  }
+]
